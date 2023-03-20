@@ -1,0 +1,33 @@
+# /etc/conf.d/bitcoinrepublicd: config file for /etc/init.d/bitcoinrepublicd
+
+# Config file location
+#BITCOINREPUBLICREPUBLICD_CONFIGFILE="/etc/bitcoinrepublic/bitcoinrepublic.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOINREPUBLICREPUBLICD_USER)
+#BITCOINREPUBLICREPUBLICD_PIDDIR="/var/run/bitcoinrepublicd"
+
+# What filename to give the pidfile
+#BITCOINREPUBLICREPUBLICD_PIDFILE="${BITCOINREPUBLICREPUBLICD_PIDDIR}/bitcoinrepublicd.pid"
+
+# Where to write bitcoinrepublicd data (be mindful that the blockchain is large)
+#BITCOINREPUBLICREPUBLICD_DATADIR="/var/lib/bitcoinrepublicd"
+
+# User and group to own bitcoinrepublicd process
+#BITCOINREPUBLICREPUBLICD_USER="bitcoinrepublic"
+#BITCOINREPUBLICREPUBLICD_GROUP="bitcoinrepublic"
+
+# Path to bitcoinrepublicd executable
+#BITCOINREPUBLICREPUBLICD_BIN="/usr/bin/bitcoinrepublicd"
+
+# Nice value to run bitcoinrepublicd under
+#BITCOINREPUBLICREPUBLICD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#BITCOINREPUBLICREPUBLICD_OPTS=""
+
+# The timeout in seconds OpenRC will wait for bitcoinrepublicd to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+BITCOINREPUBLICREPUBLICD_SIGTERM_TIMEOUT=600

@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+#
+#  bitcoinrepublicd The bitcoinrepublic core server.
+#
+#
+# chkconfig: 345 80 20
+# description: bitcoinrepublicd
+# processname: bitcoinrepublicd
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/bitcoinrepublicd, see below
+if [ -f /etc/sysconfig/bitcoinrepublicd ]; then
+        . /etc/sysconfig/bitcoinrepublicd
+fi
+
+RETVAL=0
+
+prog=bitcoinrepublicd
+# you can override the lockfile via BITCOINREPUBLICREPUBLICD_LOCKFILE in /etc/sysconfig/bitcoinrepublicd
+lockfile=${BITCOINREPUBLICREPUBLICD_LOCKFILE-/var/lock/subsys/bitcoinrepublicd}
+
+# bitcoinrepublicd defaults to /usr/bin/bitcoinrepublicd, override with BITCOINREPUBLICREPUBLICD_BIN
+bitcoinrepublicd=${BITCOINREPUBLICREPUBLICD_BIN-/usr/bin/bitcoinrepublicd}
+
+# bitcoinrepublicd opts default to -disablewallet, override with BITCOINREPUBLICREPUBLICD_OPTS
+bitcoinrepublicd_opts=${BITCOINREPUBLICREPUBLICD_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $bitcoinrepublicd $bitcoinrepublicd_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -t600
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac

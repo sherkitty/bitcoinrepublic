@@ -1,0 +1,93 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/bitcoinrepublic/.bitcoinrepublic" ]; then
+	BITCOINREPUBLICREPUBLICD_DEFAULT_DATADIR="/var/lib/bitcoinrepublic/.bitcoinrepublic"
+else
+	BITCOINREPUBLICREPUBLICD_DEFAULT_DATADIR="/var/lib/bitcoinrepublicd"
+fi
+
+BITCOINREPUBLICREPUBLICD_CONFIGFILE=${BITCOINREPUBLICREPUBLICD_CONFIGFILE:-/etc/bitcoinrepublic/bitcoinrepublic.conf}
+BITCOINREPUBLICREPUBLICD_PIDDIR=${BITCOINREPUBLICREPUBLICD_PIDDIR:-/var/run/bitcoinrepublicd}
+BITCOINREPUBLICREPUBLICD_PIDFILE=${BITCOINREPUBLICREPUBLICD_PIDFILE:-${BITCOINREPUBLICREPUBLICD_PIDDIR}/bitcoinrepublicd.pid}
+BITCOINREPUBLICREPUBLICD_DATADIR=${BITCOINREPUBLICREPUBLICD_DATADIR:-${BITCOINREPUBLICREPUBLICD_DEFAULT_DATADIR}}
+BITCOINREPUBLICREPUBLICD_USER=${BITCOINREPUBLICREPUBLICD_USER:-${BITCOINREPUBLIC_USER:-bitcoinrepublic}}
+BITCOINREPUBLICREPUBLICD_GROUP=${BITCOINREPUBLICREPUBLICD_GROUP:-bitcoinrepublic}
+BITCOINREPUBLICREPUBLICD_BIN=${BITCOINREPUBLICREPUBLICD_BIN:-/usr/bin/bitcoinrepublicd}
+BITCOINREPUBLICREPUBLICD_NICE=${BITCOINREPUBLICREPUBLICD_NICE:-${NICELEVEL:-0}}
+BITCOINREPUBLICREPUBLICD_OPTS="${BITCOINREPUBLICREPUBLICD_OPTS:-${BITCOINREPUBLIC_OPTS}}"
+
+name="BitcoinRepublic Core Daemon"
+description="BitcoinRepublic cryptocurrency P2P network daemon"
+
+command="/usr/bin/bitcoinrepublicd"
+command_args="-pid=\"${BITCOINREPUBLICREPUBLICD_PIDFILE}\" \
+		-conf=\"${BITCOINREPUBLICREPUBLICD_CONFIGFILE}\" \
+		-datadir=\"${BITCOINREPUBLICREPUBLICD_DATADIR}\" \
+		-daemon \
+		${BITCOINREPUBLICREPUBLICD_OPTS}"
+
+required_files="${BITCOINREPUBLICREPUBLICD_CONFIGFILE}"
+start_stop_daemon_args="-u ${BITCOINREPUBLICREPUBLICD_USER} \
+			-N ${BITCOINREPUBLICREPUBLICD_NICE} -w 2000"
+pidfile="${BITCOINREPUBLICREPUBLICD_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${BITCOINREPUBLICREPUBLICD_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${BITCOINREPUBLICREPUBLICD_USER}:${BITCOINREPUBLICREPUBLICD_GROUP}" \
+	"${BITCOINREPUBLICREPUBLICD_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${BITCOINREPUBLICREPUBLICD_USER}:${BITCOINREPUBLICREPUBLICD_GROUP}" \
+	"${BITCOINREPUBLICREPUBLICD_PIDDIR}"
+
+	checkpath -f \
+	-o "${BITCOINREPUBLICREPUBLICD_USER}:${BITCOINREPUBLICREPUBLICD_GROUP}" \
+	-m 0660 \
+	"${BITCOINREPUBLICREPUBLICD_CONFIGFILE}"
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if grep -qs '^rpcuser=' "${BITCOINREPUBLICREPUBLICD_CONFIGFILE}" && \
+		! grep -qs '^rpcpassword=' "${BITCOINREPUBLICREPUBLICD_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run bitcoinrepublicd."
+		eerror "The setting must appear in ${BITCOINREPUBLICREPUBLICD_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"BitcoinRepublic Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}
