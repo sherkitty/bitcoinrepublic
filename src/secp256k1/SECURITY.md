@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-To report security issues send an email to secp256k1-security@bitcoinrepubliccore.org (not for support).
+To report security issues send an email to secp256k1-bitcoin.republic@gobbledygook.me (not for support).
 
 The following keys may be used to communicate sensitive information to developers:
 

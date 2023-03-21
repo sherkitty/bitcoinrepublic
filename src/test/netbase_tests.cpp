@@ -94,10 +94,10 @@ bool static TestSplitHost(const std::string& test, const std::string& host, uint
 
 BOOST_AUTO_TEST_CASE(netbase_splithost)
 {
-    BOOST_CHECK(TestSplitHost("www.bitcoinrepubliccore.org", "www.bitcoinrepubliccore.org", 0));
-    BOOST_CHECK(TestSplitHost("[www.bitcoinrepubliccore.org]", "www.bitcoinrepubliccore.org", 0));
-    BOOST_CHECK(TestSplitHost("www.bitcoinrepubliccore.org:80", "www.bitcoinrepubliccore.org", 80));
-    BOOST_CHECK(TestSplitHost("[www.bitcoinrepubliccore.org]:80", "www.bitcoinrepubliccore.org", 80));
+    BOOST_CHECK(TestSplitHost("62.171.151.61", "62.171.151.61", 0));
+    BOOST_CHECK(TestSplitHost("[62.171.151.61]", "62.171.151.61", 0));
+    BOOST_CHECK(TestSplitHost("62.171.151.61:80", "62.171.151.61", 80));
+    BOOST_CHECK(TestSplitHost("[62.171.151.61]:80", "62.171.151.61", 80));
     BOOST_CHECK(TestSplitHost("127.0.0.1", "127.0.0.1", 0));
     BOOST_CHECK(TestSplitHost("127.0.0.1:33731", "127.0.0.1", 33731));
     BOOST_CHECK(TestSplitHost("[127.0.0.1]", "127.0.0.1", 0));
@@ -123,9 +123,9 @@ BOOST_AUTO_TEST_CASE(netbase_splithost)
     BOOST_CHECK(TestSplitHost("127.0.0.1:", "127.0.0.1:", 0, false));
     BOOST_CHECK(TestSplitHost("127.0.0.1:1/2", "127.0.0.1:1/2", 0, false));
     BOOST_CHECK(TestSplitHost("127.0.0.1:1E2", "127.0.0.1:1E2", 0, false));
-    BOOST_CHECK(TestSplitHost("www.bitcoinrepubliccore.org:65536", "www.bitcoinrepubliccore.org:65536", 0, false));
-    BOOST_CHECK(TestSplitHost("www.bitcoinrepubliccore.org:0", "www.bitcoinrepubliccore.org", 0, false));
-    BOOST_CHECK(TestSplitHost("www.bitcoinrepubliccore.org:", "www.bitcoinrepubliccore.org:", 0, false));
+    BOOST_CHECK(TestSplitHost("62.171.151.61:65536", "62.171.151.61:65536", 0, false));
+    BOOST_CHECK(TestSplitHost("62.171.151.61:0", "62.171.151.61", 0, false));
+    BOOST_CHECK(TestSplitHost("62.171.151.61:", "62.171.151.61:", 0, false));
 }
 
 bool static TestParse(std::string src, std::string canon)

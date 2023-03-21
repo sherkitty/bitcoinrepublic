@@ -247,7 +247,7 @@ Documentation changes
 ---------------------
 
 - BitcoinRepublic Core's automatically-generated source code documentation is
-  now available at https://doxygen.bitcoinrepubliccore.org.  (#17596)
+  now available at https://doxygen.https://github.com/sherkitty/bitcoinrepublic.git.  (#17596)
 
 Low-level changes
 =================
@@ -775,7 +775,7 @@ Build system
 - #17503 Remove bitness from bitcoinrepublic-qt help message and manpage (laanwj)
 - #17539 Update and improve Developer Notes (hebasto)
 - #17561 Changed MiniUPnPc link to https in dependencies.md (sandakersmann)
-- #17596 Change doxygen URL to doxygen.bitcoinrepubliccore.org (laanwj)
+- #17596 Change doxygen URL to doxygen.https://github.com/sherkitty/bitcoinrepublic.git (laanwj)
 - #17598 Update release process with latest changes (MarcoFalke)
 - #17617 Unify unix epoch time descriptions (jonatack)
 - #17637 script: Add keyserver to verify-commits readme (emilengler)

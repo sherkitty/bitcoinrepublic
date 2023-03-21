@@ -5,7 +5,7 @@
 """Script for verifying BitcoinRepublic Core release binaries
 
 This script attempts to download the signature file SHA256SUMS.asc from
-bitcoinrepubliccore.org and bitcoinrepublic.org and compares them.
+https://github.com/sherkitty/bitcoinrepublic.git and bitcoinrepublic.org and compares them.
 It first checks if the signature passes, and then downloads the files
 specified in the file, and checks if the hashes of these files match those
 that are specified in the signature file.
@@ -113,7 +113,7 @@ def main(args):
     success, output = download_with_wget(HOST2 + remote_sigfile, sigfile2)
     if not success:
         print("bitcoinrepublic.org failed to provide signature file, "
-              "but bitcoinrepubliccore.org did?")
+              "but https://github.com/sherkitty/bitcoinrepublic.git did?")
         print("wget output:")
         print(indent(output, '\t'))
         remove_files([sigfile1])
@@ -121,7 +121,7 @@ def main(args):
 
     # ensure that both signature files are equal
     if not files_are_equal(sigfile1, sigfile2):
-        print("bitcoinrepublic.org and bitcoinrepubliccore.org signature files were not equal?")
+        print("bitcoinrepublic.org and https://github.com/sherkitty/bitcoinrepublic.git signature files were not equal?")
         print(f"See files {WORKINGDIR}/{sigfile1} and {WORKINGDIR}/{sigfile2}")
         return 6
 

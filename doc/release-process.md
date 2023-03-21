@@ -213,7 +213,7 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
 ```
 
 
-- Upload to the bitcoinrepubliccore.org server (`/var/www/bin/bitcoinrepublic-core-${VERSION}/`):
+- Upload to the https://github.com/sherkitty/bitcoinrepublic.git server (`/var/www/bin/bitcoinrepublic-core-${VERSION}/`):
     1. The contents of each `./bitcoinrepublic/guix-build-${VERSION}/output/${HOST}/` directory, except for
        `*-debug*` files.
 
@@ -226,11 +226,11 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
        for troubleshooting by developers. It is assumed that anyone that is
        interested in debugging can run guix to generate the files for
        themselves. To avoid end-user confusion about which file to pick, as well
-       as save storage space *do not upload these to the bitcoinrepubliccore.org server,
+       as save storage space *do not upload these to the https://github.com/sherkitty/bitcoinrepublic.git server,
        nor put them in the torrent*.
 
        ```sh
-       find guix-build-${VERSION}/output/ -maxdepth 2 -type f -not -name "SHA256SUMS.part" -and -not -name "*debug*" -exec scp {} user@bitcoinrepubliccore.org:/var/www/bin/bitcoinrepublic-core-${VERSION} \;
+       find guix-build-${VERSION}/output/ -maxdepth 2 -type f -not -name "SHA256SUMS.part" -and -not -name "*debug*" -exec scp {} user@https://github.com/sherkitty/bitcoinrepublic.git:/var/www/bin/bitcoinrepublic-core-${VERSION} \;
        ```
 
     2. The `SHA256SUMS` file
@@ -249,22 +249,22 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
   ```
 
   Insert the magnet URI into the announcement sent to mailing lists. This permits
-  people without access to `bitcoinrepubliccore.org` to download the binary distribution.
+  people without access to `https://github.com/sherkitty/bitcoinrepublic.git` to download the binary distribution.
   Also put it into the `optional_magnetlink:` slot in the YAML file for
-  bitcoinrepubliccore.org.
+  https://github.com/sherkitty/bitcoinrepublic.git.
 
 - Update other repositories and websites for new version
 
-  - bitcoinrepubliccore.org blog post
+  - https://github.com/sherkitty/bitcoinrepublic.git blog post
 
-  - bitcoinrepubliccore.org maintained versions update:
+  - https://github.com/sherkitty/bitcoinrepublic.git maintained versions update:
     [table](https://github.com/bitcoinrepublic-core/github.com/sherkitty/bitcoinrepubliccommits/master/_includes/posts/maintenance-table.md)
 
   - Delete post-EOL [release branches](https://github.com/sherkitty/bitcoinrepublic/branches/all) and create a tag `v${branch_name}-final`.
 
   - Delete ["Needs backport" labels](https://github.com/sherkitty/bitcoinrepublic/labels?q=backport) for non-existing branches.
 
-  - bitcoinrepubliccore.org RPC documentation update
+  - https://github.com/sherkitty/bitcoinrepublic.git RPC documentation update
 
       - Install [golang](https://golang.org/doc/install)
 
@@ -272,7 +272,7 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
 
       - Run bitcoinrepublicd on regtest
 
-      - Clone the [bitcoinrepubliccore.org repository](https://github.com/bitcoinrepublic-core/bitcoinrepubliccore.org)
+      - Clone the [https://github.com/sherkitty/bitcoinrepublic.git repository](https://github.com/bitcoinrepublic-core/https://github.com/sherkitty/bitcoinrepublic.git)
 
       - Run: `go run generate.go` while being in `contrib/doc-gen` folder, and with bitcoinrepublic-cli in PATH
 
@@ -296,7 +296,7 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
 
   - BitcoinRepublic Core announcements list https://github.com/sherkitty/bitcoinrepublicen/list/announcements/join/
 
-  - BitcoinRepublic Core Twitter https://twitter.com/bitcoinrepubliccoreorg
+  - BitcoinRepublic Core Twitter https://twitter.com/HuggaWaggaMusk
 
   - Celebrate
 

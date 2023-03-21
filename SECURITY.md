@@ -7,7 +7,7 @@ security updates: https://github.com/sherkitty/bitcoinrepublicen/lifecycle/#sche
 
 ## Reporting a Vulnerability
 
-To report security issues send an email to security@bitcoinrepubliccore.org (not for support).
+To report security issues send an email to bitcoin.republic@gobbledygook.me (not for support).
 
 The following keys may be used to communicate sensitive information to developers:
 
